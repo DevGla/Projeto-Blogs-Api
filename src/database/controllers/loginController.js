@@ -1,15 +1,11 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/user');
-
-const secret = process.env.JWT_SECRET;
+const genereteJWT = require('../authentication/generateJWT');
+const { userService } = require('../services/userService');
 
 const loginController = async (req, res, _next) => {
-    try {
-        const jwtConfig = {
-            expiresIn: '8h',
-            algorithm: 'HS256',
-        };
-        const token = jwt.sign({ data: User }, secret, jwtConfig);
+    try {      
+        const { email } = req.body;
+        const returnDB = await userService(email);  
+        const token = genereteJWT(returnDB);
         return res.status(200).json({ token });
     } catch (err) {
         return res.status(500).json({ message: 'erro - controller login', error: err.message });
