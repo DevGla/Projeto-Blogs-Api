@@ -17,8 +17,17 @@ const getAllUserService = async () => {
     return getAllUser;
 };
 
+const getUserByIdService = async (id) => {
+    console.log(id);
+    const getUserByID = await User
+    .findOne({ where: { id }, attributes: { exclude: ['password'] } });
+    console.log('getUserByID');
+    return getUserByID;
+};
+
 module.exports = {
     userService,
     userCreate,
     getAllUserService,
+    getUserByIdService,
 };

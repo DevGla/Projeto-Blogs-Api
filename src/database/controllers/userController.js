@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const { userCreate, getAllUserService } = require('../services/userService');
+const { userCreate, getAllUserService, getUserByIdService } = require('../services/userService');
 const User = require('../models/user');
 
 const secret = process.env.JWT_SECRET; 
@@ -27,7 +27,19 @@ const getUserController = async (req, res, _next) => {
     }
 };
 
+const getUserControllerByID = async (req, res, _next) => {
+    try {
+    const { id } = req.params;
+    const returDB = await getUserByIdService(id);
+    if (!returDB) return res.status(404).json({ message: 'User does not exist' });
+    return res.status(200).json(returDB);
+    } catch (err) {
+        return res.status(500).json({ mesage: 'erro - controller GetUserById', erro: err.message });
+    }
+};
+
 module.exports = {
     userController,
     getUserController,
+    getUserControllerByID,
 };

@@ -13,6 +13,7 @@ app.use(bodyParser.json());
 app.post('/login', loginMiddleware, loginController);
 app.post('/user', userMiddleware, userController.userController);
 
+app.get('/user/:id', validateJWT, userController.getUserControllerByID);
 app.get('/user', validateJWT, userController.getUserController);
 
 app.use(express.json());
