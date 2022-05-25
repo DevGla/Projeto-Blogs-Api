@@ -15,10 +15,11 @@ app.use(bodyParser.json());
 app.post('/login', loginMiddleware, loginController);
 app.post('/user', userMiddleware, userController.userController);
 app.post('/categories',
-validateJWT, categoriesMiddleware, categoriesController);
+validateJWT, categoriesMiddleware, categoriesController.createCategoriesController);
 
 app.get('/user/:id', validateJWT, userController.getUserControllerByID);
 app.get('/user', validateJWT, userController.getUserController);
+app.get('/categories', validateJWT, categoriesController.getCategoriesController);
 
 app.use(express.json());
 
