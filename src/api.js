@@ -7,6 +7,7 @@ const userController = require('./database/controllers/userController');
 const validateJWT = require('./database/authentication/validateJWT');
 const categoriesMiddleware = require('./database/middlewares.js/categoriesMiddleware');
 const categoriesController = require('./database/controllers/categoriesController');
+const getPostController = require('./database/controllers/postController');
 // ...
 
 const app = express();
@@ -20,6 +21,7 @@ validateJWT, categoriesMiddleware, categoriesController.createCategoriesControll
 app.get('/user/:id', validateJWT, userController.getUserControllerByID);
 app.get('/user', validateJWT, userController.getUserController);
 app.get('/categories', validateJWT, categoriesController.getCategoriesController);
+app.get('/post', validateJWT, getPostController);
 
 app.use(express.json());
 
